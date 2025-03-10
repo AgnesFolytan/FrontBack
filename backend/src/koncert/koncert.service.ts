@@ -23,18 +23,30 @@ export class KoncertService {
   }
 
   findAll() {
-    return `This action returns all koncert`;
+    return this.db.koncert.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} koncert`;
+    return this.db.koncert.findMany({
+        where: {id}
+      }
+    );
   }
 
   update(id: number, updateKoncertDto: UpdateKoncertDto) {
-    return `This action updates a #${id} koncert`;
+    return this.db.koncert.update({
+      where: {id},
+      data: {
+        fellepo: updateKoncertDto.fellepo,
+        kezdesiIdo: new Date(updateKoncertDto.kezdesiIdo),
+        elmaradE: updateKoncertDto.elmaradE
+      }
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} koncert`;
+    return this.db.koncert.delete({
+      where: {id}
+    });
   }
 }
