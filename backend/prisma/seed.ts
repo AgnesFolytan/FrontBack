@@ -9,6 +9,7 @@ async function main() {
       data: {
         fellepo: faker.music.artist(),
         kezdesiIdo: faker.date.future(),
+        idotartam: faker.number.int(),
         elmaradE: faker.datatype.boolean()
       }
     });

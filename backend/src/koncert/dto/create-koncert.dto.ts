@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsString, IsBoolean, IsEmpty, IsOptional } from "class-validator"
+import { IsDateString, IsNotEmpty, IsString, IsBoolean, IsEmpty, IsOptional, IsInt } from "class-validator"
 
 export class CreateKoncertDto {
     @IsString()
@@ -7,6 +7,9 @@ export class CreateKoncertDto {
 
     @IsDateString()
     kezdesiIdo: string
+
+    @IsInt()
+    idotartam: number
 
     @IsBoolean()
     @IsOptional()

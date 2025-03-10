@@ -17,6 +17,7 @@ export class KoncertService {
       data: {
         fellepo: createKoncertDto.fellepo,
         kezdesiIdo: new Date(createKoncertDto.kezdesiIdo),
+        idotartam: createKoncertDto.idotartam,
         elmaradE: false
       }
     });
@@ -39,6 +40,7 @@ export class KoncertService {
       data: {
         fellepo: updateKoncertDto.fellepo,
         kezdesiIdo: new Date(updateKoncertDto.kezdesiIdo),
+        idotartam: updateKoncertDto.idotartam,
         elmaradE: updateKoncertDto.elmaradE
       }
     });

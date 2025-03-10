@@ -17,5 +17,6 @@ model Koncert {
   id         Int      @id @default(autoincrement())
   fellepo    String
   kezdesiIdo DateTime
+  idotartam  Int
   elmaradE   Boolean
 }
