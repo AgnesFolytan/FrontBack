@@ -6,7 +6,7 @@ interface concert {
     fellepo: string,
     kezdesiIdo: string,
     idotartam: number,
-    elmaradE: Boolean
+    elmaradE: boolean
 }
 
 export default function Home() {
@@ -15,12 +15,11 @@ export default function Home() {
     useEffect(() => {
         async function load() {
             const result = await fetch("http://localhost:3000/koncert", {
-                method: "GET",
-                headers: { "Accept": "application/json" }
+                method: "GET"
             });
             if (result.ok) {
                 const json = await result.json();
-                setConserts(json.data);
+                setConserts(json);
             } else {
                 console.log(await result.text());
             }
@@ -31,18 +30,24 @@ export default function Home() {
     async function elmaradFunction(id: number) {
         const result = await fetch("http://localhost:3000/koncert/" + id, {
             method: "PATCH",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                elmaradE: false
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ elmaradE: true })
+        });
+
+        if (result.ok) {
+            setConserts((prevConserts) =>
+                prevConserts.map(c =>
+                    c.id === id ? { ...c, elmaradE: true } : c
+                )
+            );
+        } else {
+            console.log(await result.text());
         }
-        )
-        return
     }
 
     return (
         <>
-            <Table>
+            <Table variant="dark">
                 <thead>
                     <tr>
                         <th>Fellépő</th>
@@ -52,12 +57,12 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    {concerts.map((c) => (
-                        <tr>
+                    {concerts && concerts.map((c) => (
+                        <tr key={c.id} className={c.elmaradE? "elmaradRow": ""}>
                             <td>{c.fellepo}</td>
                             <td>{c.kezdesiIdo}</td>
                             <td>{c.idotartam}</td>
-                            <td>{c.elmaradE? "Igen": "Nem"}<Button onClick={elmaradFunction(c.id)} hidden/></td>
+                            <td>{c.elmaradE ? "Igen\t" : "Nem\t"}<Button variant="danger" onClick={() => elmaradFunction(c.id)} disabled={c.elmaradE}>Elmarad</Button></td>
                         </tr>
                     ))}
                 </tbody>
